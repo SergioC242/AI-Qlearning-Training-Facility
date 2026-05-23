@@ -27,7 +27,7 @@ static void train(int episodes)
 
     for (int ep = 0; ep < episodes; ++ep)
     {
-        float eps = 1.0f - 0.95f * (static_cast<float>(ep) / episodes);
+        float eps = 1.0f - 0.95f * (static_cast<float>(ep) / static_cast<float>(episodes));
         if (eps < 0.05f) eps = 0.05f;
         ai.setEpsilon(eps);
 
@@ -42,7 +42,7 @@ static void train(int episodes)
 
         if ((ep + 1) % logEvery == 0)
         {
-            float winRate = 100.f * wins / (wins + losses);
+            float winRate = 100.f * static_cast<float>(wins) / static_cast<float>(wins + losses);
             std::cout << "  ep " << std::setw(7) << (ep+1)
                       << "  eps=" << std::fixed << std::setprecision(3) << eps
                       << "  win% " << std::setprecision(1) << winRate
