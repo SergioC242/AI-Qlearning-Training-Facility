@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/sergio/dev/repos/AI Qlearning Training Facility/build/cmake_install.cmake",
+		"/Users/sergio/dev/repos/AI Qlearning Training Facility/build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
