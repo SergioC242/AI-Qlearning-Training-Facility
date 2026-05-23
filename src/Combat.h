@@ -23,9 +23,9 @@ enum class RoundResult { PLAYER_WIN, ENEMY_WIN, DRAW };
 //  AI-only combat encounter. No human input.
 //
 //  Damage rules:
-//    PLAYER WIN  → damage to enemy  = playerScore + minBet
-//    PLAYER LOSE → damage to player = |playerScore - enemyScore - minBet|
-//    BLACKJACK   → critical: enemy HP reduced to minBet
+//    PLAYER WIN  → damage to enemy  = playerScore - enemyScore
+//    PLAYER LOSE → damage to player = enemyScore - playerScore
+//    BLACKJACK   → critical: enemy HP set to 0 instantly
 //    DRAW        → no damage; dice restored
 //
 //  Enemy rule: draws until score > 15, then stands.
@@ -35,12 +35,10 @@ class Combat
 public:
     Combat(int playerMaxHp,
            int enemyMaxHp,
-           int minBet,
            const std::string& enemyName = "Enemy")
         : _playerMaxHp(playerMaxHp)
         , _playerHp(playerMaxHp)
-        , _enemy(enemyMaxHp, minBet, enemyName)
-        , _minBet(minBet)
+        , _enemy(enemyMaxHp, enemyName)
     {}
 
     // ── Accessors ─────────────────────────────────────────────────────────────
@@ -174,7 +172,6 @@ private:
     int   _playerMaxHp;
     int   _playerHp;
     Enemy _enemy;
-    int   _minBet;
     int   _round = 0;
 
     Deck              _deck;
@@ -295,15 +292,13 @@ private:
         case RoundResult::PLAYER_WIN:
             if (blackjack)
             {
-                int reduced = _enemy.hp() - _minBet;
-                if (reduced > 0) _enemy.takeDamage(reduced);
+                _enemy.takeDamage(_enemy.hp());   // instant kill on blackjack
                 if (verbose)
-                    std::cout << "  Critical! " << _enemy.name()
-                              << " HP -> " << _enemy.hp() << "\n";
+                    std::cout << "  Critical! " << _enemy.name() << " HP -> 0\n";
             }
             else
             {
-                int dmg = ps + _minBet;
+                int dmg = ps - es;                // difference
                 _enemy.takeDamage(dmg);
                 if (verbose)
                     std::cout << "  Enemy takes " << dmg
@@ -313,7 +308,7 @@ private:
 
         case RoundResult::ENEMY_WIN:
         {
-            int loss = std::abs(ps - es - _minBet);
+            int loss = es - ps;                   // difference
             _playerHp -= loss;
             if (_playerHp < 0) _playerHp = 0;
             if (verbose)

@@ -9,7 +9,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 static constexpr int  PLAYER_HP  = 100;
 static constexpr int  ENEMY_HP   = 80;
-static constexpr int  MIN_BET    = 10;
 static const std::string QTABLE  = "qtable.txt";
 static const std::string ENEMY_NAME = "Goblin";
 
@@ -31,7 +30,7 @@ static void train(int episodes)
         if (eps < 0.05f) eps = 0.05f;
         ai.setEpsilon(eps);
 
-        Combat combat(PLAYER_HP, ENEMY_HP, MIN_BET, ENEMY_NAME);
+        Combat combat(PLAYER_HP, ENEMY_HP, ENEMY_NAME);
 
         // Silence output during training
         std::streambuf* old = std::cout.rdbuf(nullptr);
@@ -63,7 +62,7 @@ static void watch()
     AIPlayer ai(0.1f, 0.9f, 0.0f);   // epsilon=0 → pure exploit
     ai.loadQTable(QTABLE);
 
-    Combat combat(PLAYER_HP, ENEMY_HP, MIN_BET, ENEMY_NAME);
+    Combat combat(PLAYER_HP, ENEMY_HP, ENEMY_NAME);
     combat.runEncounter(ai, true);
 
     std::cout << "\nFinal AI HP  : " << combat.playerHp() << "\n";

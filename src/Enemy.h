@@ -12,8 +12,8 @@
 class Enemy
 {
 public:
-    explicit Enemy(int maxHp, int minBet, const std::string& name = "Enemy")
-        : _maxHp(maxHp), _hp(maxHp), _minBet(minBet), _name(name) {}
+    explicit Enemy(int maxHp, const std::string& name = "Enemy")
+        : _maxHp(maxHp), _hp(maxHp), _name(name) {}
 
     void clearHand() { _hand.clear(); }
 
@@ -23,7 +23,6 @@ public:
 
     int  hp()          const { return _hp; }
     int  maxHp()       const { return _maxHp; }
-    int  minBet()      const { return _minBet; }
     bool isDefeated()  const { return _hp <= 0; }
 
     void takeDamage(int dmg)
@@ -61,7 +60,6 @@ public:
 private:
     int               _maxHp;
     int               _hp;
-    int               _minBet;
     std::string       _name;
     std::vector<Card> _hand;
 };
