@@ -25,15 +25,15 @@ public:
     enum class AIAction
     {
         HIT_CARD,      // Draw a card from the deck
-        USE_DIE_1,     
-        USE_DIE_2,     
-        USE_DIE_3,     
-        USE_DIE_4,     
-        USE_DIE_5,     
-        USE_DIE_6,     
+        USE_DIE_1,     // d[1-10]
+        USE_DIE_2,     // d[10-20]
+        USE_DIE_3,     // d[1-6]
+        USE_DIE_4,     // d[1-4]
+        USE_DIE_5,     // d[15-20]
+        USE_DIE_6,     // d[1|11]
         STAND,         // End the turn
 
-        COUNT          
+        COUNT
     };
 
     // ── Constructor / Destructor ─────────────────────────────────────────────

@@ -175,7 +175,17 @@ private:
     int   _round = 0;
 
     Deck              _deck;
-    std::array<Die,6> _dice;
+    std::array<Die, NUM_DICE> _dice = {{
+        Die(DieType::D1_10),    // slot 0 — d[1-10]
+        Die(DieType::D10_20),   // slot 1 — d[10-20]
+        Die(DieType::D1_6),     // slot 2 — d[1-6]
+        Die(DieType::D1_4),     // slot 3 — d[1-4]
+        Die(DieType::D15_20),   // slot 4 — d[15-20]
+        Die(DieType::D1_OR_11), // slot 5 — d[1|11]
+        // ── Add new dice here. ────────────────────────────────────────────
+        // Also add a DieType value in Die.h and a USE_DIE_N action in
+        // AIPlayer.h + AIPlayer::allActions().
+    }};
     std::vector<Card> _playerHand;
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -186,6 +196,22 @@ private:
     {
         for (const auto& c : cards)
             const_cast<std::vector<Card>&>(_enemy.hand()).push_back(c);
+    }
+
+    /// Add an arbitrary die value to the player's hand.
+    /// Die values can exceed the maximum single-card rank (11), so we
+    /// decompose the value into as many 10-value cards as needed plus a
+    /// remainder, keeping handScore() accurate without breaking Rank bounds.
+    void addDieValueToHand(int value)
+    {
+        // Fill with TEN cards (value=10) then a remainder card
+        while (value > 11)
+        {
+            _playerHand.push_back({ Suit::CLUBS, Rank::TEN });
+            value -= 10;
+        }
+        if (value > 0)
+            _playerHand.push_back({ Suit::CLUBS, static_cast<Rank>(value + 1) });
     }
 
     // ── AI turn ───────────────────────────────────────────────────────────────
@@ -200,7 +226,7 @@ private:
             // Available actions: HIT, unused dice, STAND
             std::vector<AIPlayer::AIAction> available;
             available.push_back(AIPlayer::AIAction::HIT_CARD);
-            for (int i = 0; i < 6; ++i)
+            for (int i = 0; i < NUM_DICE; ++i)
                 if (!_dice[i].isUsed())
                     available.push_back(static_cast<AIPlayer::AIAction>(
                         static_cast<int>(AIPlayer::AIAction::USE_DIE_1) + i));
@@ -213,7 +239,7 @@ private:
             cs.enemyHp     = _enemy.hp();
             cs.hiLoCount   = _deck.hiLoCount();
             cs.bustProb    = _deck.bustProbability(ps);
-            for (int i = 0; i < 6; ++i)
+            for (int i = 0; i < NUM_DICE; ++i)
             {
                 cs.diceAvail[i]  = !_dice[i].isUsed();
                 cs.diceValues[i] = _dice[i].value();
@@ -240,14 +266,18 @@ private:
             {
                 int dieIdx = static_cast<int>(action)
                            - static_cast<int>(AIPlayer::AIAction::USE_DIE_1);
-                if (dieIdx < 0 || dieIdx >= 6 || _dice[dieIdx].isUsed())
+                if (dieIdx < 0 || dieIdx >= NUM_DICE || _dice[dieIdx].isUsed())
                     continue;
 
                 int rolled = _dice[dieIdx].roll();
-                Card fakeCard{ Suit::CLUBS, static_cast<Rank>(rolled + 1) };
-                _playerHand.push_back(fakeCard);
+                // Die values can exceed Rank range; add as a raw score offset
+                // by appending a synthetic card clamped to valid Rank values,
+                // OR directly patch the hand score via a helper card trick.
+                // Since ranks only go to ACE(14/11), we use multiple low cards
+                // to represent large die values cleanly.
+                addDieValueToHand(rolled);
                 if (verbose)
-                    std::cout << "  AI uses die " << (dieIdx+1)
+                    std::cout << "  AI uses " << _dice[dieIdx].name()
                               << " (+" << rolled << ")  -> " << playerScore() << "\n";
             }
         }
