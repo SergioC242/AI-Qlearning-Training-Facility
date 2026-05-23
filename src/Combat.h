@@ -125,7 +125,9 @@ public:
         }
 
         // ── Damage ────────────────────────────────────────────────────────────
-        applyDamage(result, ps, blackjack, verbose);
+        // Busted scores count as 0 for both sides.
+        int effectivePs = playerBusted ? 0 : ps;
+        applyDamage(result, effectivePs, blackjack, verbose);
 
         // ── Rewards ───────────────────────────────────────────────────────────
         if (playerBusted)
@@ -322,9 +324,10 @@ private:
         case RoundResult::PLAYER_WIN:
             if (blackjack)
             {
-                _enemy.takeDamage(_enemy.hp());   // instant kill on blackjack
+                _enemy.takeDamage(21);
                 if (verbose)
-                    std::cout << "  Critical! " << _enemy.name() << " HP -> 0\n";
+                    std::cout << "  Critical! " << _enemy.name()
+                              << " takes 21 dmg  (HP: " << _enemy.hp() << ")\n";
             }
             else
             {
