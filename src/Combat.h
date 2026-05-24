@@ -247,7 +247,7 @@ private:
                 cs.diceValues[i] = _dice[i].value();
             }
 
-            AIPlayer::AIAction action = ai.chooseAction(cs.encode(), available);
+            AIPlayer::AIAction action = ai.chooseAction(ps, available);
 
             if (action == AIPlayer::AIAction::STAND)
             {

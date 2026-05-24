@@ -42,7 +42,7 @@ public:
         while (score() <= 15 && !deck.empty())
         {
             Card c = deck.draw();
-            _hand.push_back(c);
+            _hand.push_back(c); 
             if (verbose)
                 std::cout << "  [" << _name << "] draws " << c.name()
                           << "  -> " << score() << "\n";

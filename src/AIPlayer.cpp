@@ -154,9 +154,10 @@ void AIPlayer::saveQTable(const std::string& filepath) const
 
     for (const auto& entry : _qTable)
     {
-        out << entry.first.first  << " "          // state (int)
-            << static_cast<int>(entry.first.second) << " "  // action (int)
-            << entry.second << "\n";               // Q-value
+        int      handScore = entry.first.first;          // state = hand total
+        int      action    = static_cast<int>(entry.first.second); // 0=stand, 1-6=die
+        float    reward    = entry.second;
+        out << handScore << "," << action << "," << reward << "\n";
     }
     out.close();
 }
