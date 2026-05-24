@@ -234,6 +234,8 @@ private:
                         static_cast<int>(AIPlayer::AIAction::USE_DIE_1) + i));
             available.push_back(AIPlayer::AIAction::STAND);
 
+            //std::cout << "  Available actions: ";for (auto& a : available) std::cout << static_cast<int>(a) << " ";std::cout << "\n";
+
             // Encode state
             CombatState cs;
             cs.playerScore = ps;

@@ -154,10 +154,10 @@ void AIPlayer::saveQTable(const std::string& filepath) const
 
     for (const auto& entry : _qTable)
     {
-        int      handScore = entry.first.first;          // state = hand total
-        int      action    = static_cast<int>(entry.first.second); // 0=stand, 1-6=die
-        float    reward    = entry.second;
-        out << handScore << "," << action << "," << reward << "\n";
+        int   state  = entry.first.first;
+        int   action = static_cast<int>(entry.first.second);
+        float qval   = entry.second;
+        out << state << "," << action << "," << qval << "\n";
     }
     out.close();
 }
@@ -174,12 +174,20 @@ void AIPlayer::loadQTable(const std::string& filepath)
 
     _qTable.clear();
 
-    int state, actionInt;
-    float qval;
-    while (in >> state >> actionInt >> qval)
+    std::string line;
+    while (std::getline(in, line))
     {
-        AIAction action = static_cast<AIAction>(actionInt);
-        _qTable[{ state, action }] = qval;
+        if (line.empty()) continue;
+        std::istringstream ss(line);
+        std::string tok;
+
+        std::getline(ss, tok, ','); int state     = std::stoi(tok);
+        std::getline(ss, tok, ','); int actionInt  = std::stoi(tok);
+        std::getline(ss, tok, ','); float qval     = std::stof(tok);
+
+        _qTable[{ state, static_cast<AIAction>(actionInt) }] = qval;
     }
+    std::cerr << "[AIPlayer] Loaded " << _qTable.size() << " Q-table entries from "
+          << filepath << "\n";
     in.close();
 }
