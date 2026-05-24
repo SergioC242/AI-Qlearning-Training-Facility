@@ -187,7 +187,6 @@ void AIPlayer::loadQTable(const std::string& filepath)
 
         _qTable[{ state, static_cast<AIAction>(actionInt) }] = qval;
     }
-    std::cerr << "[AIPlayer] Loaded " << _qTable.size() << " Q-table entries from "
-          << filepath << "\n";
+    //std::cerr << "[AIPlayer] Loaded " << _qTable.size() << " Q-table entries from " << filepath << "\n";
     in.close();
 }
