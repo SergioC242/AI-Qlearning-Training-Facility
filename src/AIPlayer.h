@@ -84,7 +84,7 @@ public:
     void saveQTable(const std::string& filepath) const;
 
     /// Load a previously saved Q-table.
-    void loadQTable(const std::string& filepath);
+    bool loadQTable(const std::string& filepath);
 
     // ── Accessors ────────────────────────────────────────────────────────────
 

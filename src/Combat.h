@@ -84,7 +84,8 @@ public:
         //_playerHand.push_back(_deck.draw());
         //_playerHand.push_back(_deck.draw());
 
-        std::vector<Card> enemyStart = { _deck.draw(), _deck.draw() };
+        //std::vector<Card> enemyStart = { _deck.draw(), _deck.draw() };
+        std::vector<Card> enemyStart = { };
         injectEnemyCards(enemyStart);
 
         int ps = playerScore();
@@ -248,8 +249,10 @@ private:
                 cs.diceAvail[i]  = !_dice[i].isUsed();
                 cs.diceValues[i] = _dice[i].value();
             }
+            int stateId = cs.encode();
 
-            AIPlayer::AIAction action = ai.chooseAction(ps, available);
+            //AIPlayer::AIAction action = ai.chooseAction(ps, available);
+            AIPlayer::AIAction action = ai.chooseAction(stateId, available);
 
             if (action == AIPlayer::AIAction::STAND)
             {

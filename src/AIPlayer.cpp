@@ -119,7 +119,7 @@ void AIPlayer::applyReward(float reward)
 
 void AIPlayer::rewardBust()
 {
-    applyReward(-1.0f);
+    applyReward(-5.0f);
 }
 
 void AIPlayer::rewardRoundEnd(bool won)
@@ -162,14 +162,14 @@ void AIPlayer::saveQTable(const std::string& filepath) const
     out.close();
 }
 
-void AIPlayer::loadQTable(const std::string& filepath)
+bool AIPlayer::loadQTable(const std::string& filepath)
 {
     std::ifstream in(filepath);
     if (!in.is_open())
     {
         std::cerr << "[AIPlayer] Could not open file for reading: "
                   << filepath << " (starting fresh)\n";
-        return;
+        return false;
     }
 
     _qTable.clear();
@@ -189,4 +189,5 @@ void AIPlayer::loadQTable(const std::string& filepath)
     }
     //std::cerr << "[AIPlayer] Loaded " << _qTable.size() << " Q-table entries from " << filepath << "\n";
     in.close();
+    return true;
 }

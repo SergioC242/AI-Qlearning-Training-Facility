@@ -28,7 +28,7 @@ struct CombatState
     //   bits 10-11 : bustProb bucket [0-25,25-50,50-75,75+] (2 bits)
     //   bits 12+   : dice availability mask (NUM_DICE bits)
     //
-    int encode() const
+    int encode2() const
     {
         int score    = std::min(playerScore, 21);
         int hiLo     = std::clamp(hiLoCount + 10, 0, 20);
@@ -44,4 +44,20 @@ struct CombatState
              | (bpBucket << 10)
              | (diceMask << 12);
     }
+    int encode() const {
+    
+        int diceLeft = 0;
+        for (int i = 0; i < NUM_DICE; ++i)
+            if (diceAvail[i]) diceLeft++;
+
+        // 3 niveles: seguro / peligroso / casi seguro bust
+        int bust;
+        if      (bustProb < 0.3f) bust = 0;  // seguro
+        else if (bustProb < 0.7f) bust = 1;  // peligroso
+        else                      bust = 2;  // casi seguro bust
+
+        return playerScore          // bits 0-4  (0-21)
+            | (bust     << 5)      // bits 5-6  (0-2, necesita 2 bits)
+            | (diceLeft << 7);     // bits 7-9  (0-6)
+        }
 };
