@@ -81,8 +81,8 @@ public:
         _enemy.clearHand();
 
         // Deal two cards to each side
-        _playerHand.push_back(_deck.draw());
-        _playerHand.push_back(_deck.draw());
+        //_playerHand.push_back(_deck.draw());
+        //_playerHand.push_back(_deck.draw());
 
         std::vector<Card> enemyStart = { _deck.draw(), _deck.draw() };
         injectEnemyCards(enemyStart);

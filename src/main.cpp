@@ -7,8 +7,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 //  Config
 // ─────────────────────────────────────────────────────────────────────────────
-static constexpr int  PLAYER_HP  = 100;
-static constexpr int  ENEMY_HP   = 80;
+static constexpr int  PLAYER_HP  = 20;
+static constexpr int  ENEMY_HP   = 20;
 static const std::string QTABLE  = "qtable.txt";
 static const std::string ENEMY_NAME = "Goblin";
 
