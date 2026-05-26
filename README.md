@@ -41,4 +41,7 @@ Metodos:
 - loadQTable: Carga la tabla de decisiones de la IA.
 - getQValue: Mira las distintas acciones y recompensas para X situacion y Acción.
 - Set y get Epsilon: No usados actualmente. Se pueden usar para generar aprendizajes mas optimos ya que cuando se determina que la IA ya ha aprendido lo suficiente se puede bajar para que pare de utilizar opciones aleatorias y busque solo refinar los valores de recompensa de las acciones optimas.
-- 
+- maxQ: Devuelve la mayor recompensa para un estado.
+- applyReward: Aplica las recompensas a las acciones tomadas y borra la lista de acciones tomadas.
+
+
