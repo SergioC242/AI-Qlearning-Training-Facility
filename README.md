@@ -52,3 +52,7 @@ CombatState: Se encarga de que el estado actual este encodeado en el formato de 
 Deck y Die: Guardan y manejan las cartas y los dados.
 
 Enemy: Sigue las reglas de una IA simple contra la que se enfrenta la IA del jugador.
+
+**Video Showcase Features y uso**
+
+https://youtu.be/Mro3pSDN3QM
