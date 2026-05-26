@@ -3,7 +3,7 @@ Este proyecto entrena la IA de Qlearning de blackjack para este proyecto https:/
 Trata de imitar lo mas fielmente posible el comportamiento de el juego original para poder hacer miles de entrenamientos para crear la QTable
 
 
-La IA utiliza un algoritmo de aprendizaje por refuerzo llamado Q-Learning. En lugar de seguir reglas predefinidas, la IA aprende qué acciones conducen a mejores resultados recibiendo recompensas basadas en los resultados de los encuentros de combate a través de repetidas partidas.
+La IA utiliza un algoritmo de aprendizaje por refuerzo llamado Q-Learning. En lugar de seguir reglas predefinidas, la IA aprende qué acciones conducen a mejores resultados recibiendo recompensas basadas en los resultados de los encuentros de combate a través de repetidas partidas. El jugador es el que es controlado por una IA
 
 Funcionamiento:
 
@@ -46,6 +46,9 @@ Metodos:
 
 
 Combat: LLeva a cabo las rondas y llama a las funciones de la IA para tomar decisiones.
+
 CombatState: Se encarga de que el estado actual este encodeado en el formato de la tabla de decisiones.
+
 Deck y Die: Guardan y manejan las cartas y los dados.
+
 Enemy: Sigue las reglas de una IA simple contra la que se enfrenta la IA del jugador.
