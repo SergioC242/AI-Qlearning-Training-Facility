@@ -45,3 +45,7 @@ Metodos:
 - applyReward: Aplica las recompensas a las acciones tomadas y borra la lista de acciones tomadas.
 
 
+Combat: LLeva a cabo las rondas y llama a las funciones de la IA para tomar decisiones.
+CombatState: Se encarga de que el estado actual este encodeado en el formato de la tabla de decisiones.
+Deck y Die: Guardan y manejan las cartas y los dados.
+Enemy: Sigue las reglas de una IA simple contra la que se enfrenta la IA del jugador.
