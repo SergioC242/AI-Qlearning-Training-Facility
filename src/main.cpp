@@ -59,7 +59,7 @@ static void train(int episodes)
 // ─────────────────────────────────────────────────────────────────────────────
 static void watch()
 {
-    AIPlayer ai(0.1f, 0.9f, 0.0f);   // epsilon=0 → pure exploit
+    AIPlayer ai(0.1f, 0.9f, 0.0f);   // epsilon=0 → no random actions
     ai.loadQTable(QTABLE);
 
     Combat combat(PLAYER_HP, ENEMY_HP, ENEMY_NAME);
@@ -71,7 +71,7 @@ static void watch()
 
 static void watch_batch(int episodes = 1000)
 {
-    AIPlayer ai(0.1f, 0.9f, 0.0f);   // epsilon=0 → pure exploit
+    AIPlayer ai(0.1f, 0.9f, 0.0f);   // epsilon=0 → no random actions
     ai.loadQTable(QTABLE);
 
     int wins = 0, losses = 0;
