@@ -1,4 +1,4 @@
-Este proyecto entrena la IA de Qlearning de blackjack para este proyecto https://github.com/UCM-FDI-DISIA/CookingMonsters
+Este proyecto entrena la IA de Qlearning de blackjack para este proyecto https://github.com/SergioC242/IAV26-CrocheTrigo
 
 Trata de imitar lo mas fielmente posible el comportamiento de el juego original para poder hacer miles de entrenamientos para crear la QTable
 
